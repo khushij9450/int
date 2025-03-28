@@ -12,9 +12,8 @@ interface InterviewCardProps {
     userId: string;
     role: string;
     type: string;
-    techstack: string[];
+    techstack: string[];  
     createdAt: string | Date;
-    currentUserId: string;
 }
 
 interface Feedback {
@@ -23,10 +22,12 @@ interface Feedback {
     finalAssessment?: string;
 }
 
-const InterviewCard = async ({ id, userId, role, type, techstack, createdAt, currentUserId }: InterviewCardProps) => {
-    const feedback = userId && id && userId === currentUserId ? await getFeedbackByInterviewId({ interviewId: id, userId }) : null;
+const InterviewCard = async ({ id, userId, role, type, techstack, createdAt }: InterviewCardProps) => {
+    const feedback = userId && id ? await getFeedbackByInterviewId ({ interviewId : id , userId }) : null ;
     const normalizedType = /mix/gi.test(type) ? 'Mixed' : type;
     const formattedDate = dayjs(feedback?.createdAt || createdAt || Date.now()).format('MMM D, YYYY');
+
+    console.log('techstack in InterviewCard:', techstack);
 
     return (
         <div className='card-border w-[360px] max-sm:w-full min-h-96'>

@@ -7,12 +7,8 @@ console.log("FIREBASE_PROJECT_ID:", process.env.FIREBASE_PROJECT_ID);
 console.log("FIREBASE_CLIENT_EMAIL:", process.env.FIREBASE_CLIENT_EMAIL);
 console.log("FIREBASE_PRIVATE_KEY exists:", !!process.env.FIREBASE_PRIVATE_KEY);
 
-// Initialize Firebase Admin and Firestore
 const initFirebaseAdmin = () => {
   const apps = getApps();
-  let auth, db;
-
-  // Only initialize if no apps exist
   if (!apps.length) {
     try {
       initializeApp({
@@ -22,26 +18,17 @@ const initFirebaseAdmin = () => {
           privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
         }),
       });
-      console.log("Firebase Admin SDK initialized successfully");
-    } catch (error) {
-      console.error("Error initializing Firebase Admin SDK:", error);
+      console.log("Firebase Admin SDK initialized successfully"); // Debug log
+    } catch (error: any) {
+      console.error("Error initializing Firebase Admin SDK:", error); // Debug log
       throw new Error("Failed to initialize Firebase Admin SDK");
     }
-
-    // Initialize Firestore and set settings
-    db = getFirestore();
-    db.settings({ ignoreUndefinedProperties: true });
-
-    // Initialize Auth
-    auth = getAuth();
-  } else {
-    // If already initialized, reuse the existing instances
-    db = getFirestore();
-    auth = getAuth();
   }
 
-  return { auth, db };
+  return {
+    auth: getAuth(),
+    db: getFirestore(),
+  };
 };
 
-// Export the initialized instances
 export const { auth, db } = initFirebaseAdmin();

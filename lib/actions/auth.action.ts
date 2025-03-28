@@ -2,17 +2,20 @@
 
 import { auth, db } from "@/firebase/admin";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
+ 
 const SESSION_DURATION = 60 * 60 * 24 * 7;
 
+ 
 export async function setSessionCookie(idToken: string) {
   const cookieStore = await cookies();
 
+  
   const sessionCookie = await auth.createSessionCookie(idToken, {
-    expiresIn: SESSION_DURATION * 1000,
+    expiresIn: SESSION_DURATION * 1000,  
   });
 
+ 
   cookieStore.set("session", sessionCookie, {
     maxAge: SESSION_DURATION,
     httpOnly: true,
@@ -26,7 +29,7 @@ export async function signUp(params: SignUpParams) {
   const { uid, name, email } = params;
 
   try {
-    // Check if user exists in db
+    // check if user exists in db
     const userRecord = await db.collection("users").doc(uid).get();
     if (userRecord.exists)
       return {
@@ -34,7 +37,7 @@ export async function signUp(params: SignUpParams) {
         message: "User already exists. Please sign in.",
       };
 
-    // Save user to db
+    // save user to db
     await db.collection("users").doc(uid).set({
       name,
       email,
@@ -76,13 +79,8 @@ export async function signIn(params: SignInParams) {
       };
 
     await setSessionCookie(idToken);
-
-    return {
-      success: true,
-      message: "Successfully signed in.",
-    };
   } catch (error: any) {
-    console.error("Error signing in:", error);
+    console.log("");
 
     return {
       success: false,
@@ -91,31 +89,14 @@ export async function signIn(params: SignInParams) {
   }
 }
 
+ 
 export async function signOut() {
   const cookieStore = await cookies();
-  const sessionCookie = cookieStore.get("session")?.value;
 
-  try {
-    if (sessionCookie) {
-      
-      const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
-   
-      await auth.revokeRefreshTokens(decodedClaims.sub);
-      console.log(`Revoked refresh tokens for user: ${decodedClaims.sub}`);
-    }
- 
-    cookieStore.delete("session");
-    console.log("Session cookie deleted successfully");
-  } catch (error) {
-    console.error("Error during sign out:", error);
- 
-    cookieStore.delete("session");
-  }
-
- 
-  redirect("/sign-in");
+  cookieStore.delete("session");
 }
 
+ 
 export async function getCurrentUser(): Promise<User | null> {
   const cookieStore = await cookies();
 
@@ -125,7 +106,7 @@ export async function getCurrentUser(): Promise<User | null> {
   try {
     const decodedClaims = await auth.verifySessionCookie(sessionCookie, true);
 
-    
+    // get user info from db
     const userRecord = await db
       .collection("users")
       .doc(decodedClaims.uid)
@@ -137,13 +118,17 @@ export async function getCurrentUser(): Promise<User | null> {
       id: userRecord.id,
     } as User;
   } catch (error) {
-    console.error("Error verifying session cookie:", error);
- 
+    console.log(error);
+
+    // Invalid or expired session
     return null;
   }
 }
-
+ 
 export async function isAuthenticated() {
   const user = await getCurrentUser();
   return !!user;
 }
+
+
+ 
