@@ -10,6 +10,9 @@ import React from 'react'
 const page = async() => {
 
   const user = await getCurrentUser();
+ 
+  console.log("Current User:", user);
+  console.log("User ID:", user?.id);
 
 
   const [userInterviews, latestInterviews ] = await Promise.all([
@@ -19,9 +22,9 @@ const page = async() => {
   ]);
  
 
-  const hasPastInterviews = userInterviews?.length>0;
+  const hasPastInterviews = userInterviews?.length!>0;
 
-  const hasUpcomingInterviews = latestInterviews?.length>0;
+  const hasUpcomingInterviews = latestInterviews?.length!>0;
 
   return (
     <>
