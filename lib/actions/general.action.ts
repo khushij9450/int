@@ -60,7 +60,7 @@ export async function getLatestInterviews(params: GetLatestInterviewsParams): Pr
 }
 
 export async function getInterviewsByUserId(userId: string): Promise<Interview[]> {
-  // Validate userId
+  
   if (!userId) {
     console.error("getInterviewsByUserId: userId is undefined or empty");
     return [];
@@ -91,7 +91,7 @@ export async function getInterviewsByUserId(userId: string): Promise<Interview[]
 export async function createFeedback(params: CreateFeedbackParams) {
   const { interviewId, userId, transcript } = params;
 
-  // Validate input parameters
+ 
   if (!interviewId || !userId || !transcript) {
     console.error("createFeedback: Missing required parameters", { interviewId, userId, transcript });
     return { success: false };
@@ -121,7 +121,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       system: "You are a professional interviewer analyzing a mock interview. Your task is to evaluate the candidate based on structured categories",
     });
 
-    // Remove undefined values from the feedback object
+    
     const feedbackData = {
       interviewId,
       userId,
@@ -132,8 +132,7 @@ export async function createFeedback(params: CreateFeedbackParams) {
       finalAssessment,
       createdAt: new Date().toISOString(),
     };
-
-    // Filter out undefined values
+ 
     const cleanFeedbackData = Object.fromEntries(
       Object.entries(feedbackData).filter(([_, value]) => value !== undefined)
     );
