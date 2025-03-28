@@ -14,6 +14,22 @@ const page = async() => {
   console.log("Current User:", user);
   console.log("User ID:", user?.id);
 
+  if (!user || !user.id) {
+    return (
+      <section className="card-cta">
+        <div className="flex flex-col gap-6 max-w-lg">
+          <h2>Please Log In</h2>
+          <p className="text-lg">
+            You need to be logged in to view your interviews.
+          </p>
+          <Button asChild className="btn-primary max-sm:w-full">
+            <Link href="/sign-in">Log In</Link>
+          </Button>
+        </div>
+      </section>
+    );
+  }
+
 
   const [userInterviews, latestInterviews ] = await Promise.all([
     getInterviewsByUserId(user?.id!),
