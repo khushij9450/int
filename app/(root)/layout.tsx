@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ReactNode } from "react";
 import { redirect } from "next/navigation";
-import LogoutButton from "@/components/LogoutButton"; // Import the LogoutButton component
+import LogoutButton from "@/components/LogoutButton";
 
 import { isAuthenticated } from "@/lib/actions/auth.action";
 
@@ -12,16 +12,38 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
     <div className="root-layout">
-      <nav className="flex justify-between items-center p-4">
-        <Link href="/" className="flex items-center gap-2">
-          <Image src="/logo.svg" alt="MockMate Logo" width={38} height={32} />
-          <h2 className="text-primary-100">PrepWise</h2>
+      <nav className="cyber-nav">
+        <Link href="/" className="nav-brand">
+          <div className="logo-container-nav">
+            <div className="logo-glow-nav">
+              <Image src="/logo.svg" alt="PrepWise Logo" width={38} height={32} />
+            </div>
+          </div>
+          <h2 className="brand-text">
+            <span className="prep-text">PREP</span>
+            <span className="wise-text">WISE</span>
+          </h2>
         </Link>
-        <div>
+        
+        <div className="nav-actions">
+          <div className="status-indicator">
+            <div className="status-dot"></div>
+            <span className="status-text">AI ONLINE</span>
+          </div>
           <LogoutButton />
         </div>
       </nav>
-      {children}
+      
+      <main className="main-content">
+        {children}
+      </main>
+      
+      {/* Ambient Background Effects */}
+      <div className="ambient-effects">
+        <div className="floating-orb orb-1"></div>
+        <div className="floating-orb orb-2"></div>
+        <div className="floating-orb orb-3"></div>
+      </div>
     </div>
   );
 };

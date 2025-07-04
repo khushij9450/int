@@ -17,53 +17,72 @@ interface InterviewCardProps {
     currentUserId: string;
 }
 
-interface Feedback {
-    createdAt?: string | Date;
-    totalScore?: number;
-    finalAssessment?: string;
-}
-
 const InterviewCard = async ({ id, userId, role, type, techstack, createdAt, currentUserId }: InterviewCardProps) => {
     const feedback = userId && id && userId === currentUserId ? await getFeedbackByInterviewId({ interviewId: id, userId }) : null;
     const normalizedType = /mix/gi.test(type) ? 'Mixed' : type;
     const formattedDate = dayjs(feedback?.createdAt || createdAt || Date.now()).format('MMM D, YYYY');
 
     return (
-        <div className='card-border w-[360px] max-sm:w-full min-h-96'>
-            <div className='card-interview'>
-                <div>
-                    <div className='absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg bg-light-600'>
-                        <p className='bage-text'>{normalizedType}</p>
+        <div className='cyber-card'>
+            <div className='card-glow'></div>
+            <div className='card-content-cyber'>
+                <div className="card-header">
+                    <div className='type-badge'>
+                        <div className="badge-glow"></div>
+                        <span className='badge-text'>{normalizedType}</span>
                     </div>
-                    <Image 
-                        src={getRandomInterviewCover()} 
-                        alt='cover image' 
-                        width={90} 
-                        height={90} 
-                        className='rounded-full object-fit size-[90px]'
-                    />
-                    <h3 className='mt-5 capitalize'>
-                        {role} Interview
+                    
+                    <div className="avatar-section">
+                        <div className="avatar-container">
+                            <Image 
+                                src={getRandomInterviewCover()} 
+                                alt='Interview Avatar' 
+                                width={80} 
+                                height={80} 
+                                className='avatar-image'
+                            />
+                            <div className="avatar-ring"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card-body">
+                    <h3 className='interview-title'>
+                        {role} <span className="title-accent">Protocol</span>
                     </h3>
-                    <div className='flex flex-row gap-5 mt-3'>
-                        <div className='flex flex-row gap-2'>
-                            <Image src='/calendar.svg' alt='calendar' width={22} height={22}/>
-                            <p>{formattedDate}</p>
+                    
+                    <div className='metrics-row'>
+                        <div className='metric-item'>
+                            <div className="metric-icon">
+                                <Image src='/calendar.svg' alt='Date' width={18} height={18}/>
+                            </div>
+                            <span className="metric-value">{formattedDate}</span>
                         </div>
-                        <div className='flex flex-row gap-2'>
-                            <Image src='/star.svg' alt='star' width={22} height={22}/>
-                            <p>{feedback?.totalScore || '---'}/100</p>
+                        
+                        <div className='metric-item'>
+                            <div className="metric-icon">
+                                <Image src='/star.svg' alt='Score' width={18} height={18}/>
+                            </div>
+                            <span className="metric-value">
+                                {feedback?.totalScore || '---'}<span className="metric-unit">/100</span>
+                            </span>
                         </div>
                     </div>
-                    <p className='line-clamp-2 mt-5'>
-                        {feedback?.finalAssessment || 'You have not taken the interview yet. Take it now to improve your skills.'}
+                    
+                    <p className='assessment-preview'>
+                        {feedback?.finalAssessment || 'Awaiting neural analysis. Initialize training sequence to unlock AI insights.'}
                     </p>
                 </div>
-                <div className='flex flex-row justify-between'>
-                    <DisplayTechIcons techStack={techstack}/>
-                    <Button asChild className='btn-primary'>
+
+                <div className='card-footer'>
+                    <div className="tech-stack">
+                        <DisplayTechIcons techStack={techstack}/>
+                    </div>
+                    
+                    <Button asChild className='btn-cyber-secondary'>
                         <Link href={feedback ? `/interview/${id}/feedback` : `/interview/${id}`}>
-                            {feedback ? 'Check Feedback' : 'View Interview'}
+                            <span>{feedback ? 'View Analysis' : 'Start Protocol'}</span>
+                            <div className="btn-arrow">→</div>
                         </Link>
                     </Button>
                 </div>

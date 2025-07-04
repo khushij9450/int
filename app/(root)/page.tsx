@@ -9,18 +9,19 @@ import React from "react";
 const page = async () => {
   const user = await getCurrentUser();
 
-  console.log("Current User:", user);
-  console.log("User ID:", user?.id);
-
   if (!user || !user.id) {
     return (
-      <section className="card-cta">
-        <div className="flex flex-col gap-6 max-w-lg">
-          <h2>Please Log In</h2>
-          <p className="text-lg">You need to be logged in to view your interviews.</p>
-          <Button asChild className="btn-primary max-sm:w-full">
-            <Link href="/sign-in">Log In</Link>
-          </Button>
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="hero-title">
+              Access <span className="gradient-text">Denied</span>
+            </h1>
+            <p className="hero-subtitle">Authentication required to access AI systems</p>
+            <Button asChild className="btn-cyber-primary">
+              <Link href="/sign-in">Initialize Login Sequence</Link>
+            </Button>
+          </div>
         </div>
       </section>
     );
@@ -36,37 +37,100 @@ const page = async () => {
 
   return (
     <>
-      <section className="card-cta">
-        <div className="flex flex-col gap-6 max-w-lg">
-          <h2>Get Interview-Ready with AI-Powered Practice & Feedback</h2>
-          <p className="text-lg">Practice on real interview questions & get instant feedback</p>
-          <Button asChild className="btn-primary max-sm:w-full">
-            <Link href="/interview">Start an Interview</Link>
-          </Button>
+      <section className="hero-section">
+        <div className="hero-content">
+          <div className="hero-text">
+            <h1 className="hero-title">
+              Welcome to the <span className="gradient-text">Future</span> of Interview Preparation
+            </h1>
+            <p className="hero-subtitle">
+              Advanced AI algorithms analyze your performance and provide real-time feedback
+            </p>
+            <div className="hero-stats">
+              <div className="stat-item">
+                <div className="stat-number">{userInterviews?.length || 0}</div>
+                <div className="stat-label">Sessions Completed</div>
+              </div>
+              <div className="stat-divider"></div>
+              <div className="stat-item">
+                <div className="stat-number">AI</div>
+                <div className="stat-label">Powered Analysis</div>
+              </div>
+            </div>
+            <Button asChild className="btn-cyber-primary">
+              <Link href="/interview">
+                <span>Initialize Interview Protocol</span>
+                <div className="btn-glow"></div>
+              </Link>
+            </Button>
+          </div>
+          
+          <div className="hero-visual">
+            <div className="robot-showcase">
+              <div className="robot-container-hero">
+                <Image 
+                  src="/robot.png" 
+                  alt="AI Interview Assistant" 
+                  width={400} 
+                  height={400} 
+                  className="robot-image-hero"
+                />
+                <div className="robot-aura"></div>
+                <div className="scanning-rings">
+                  <div className="ring ring-1"></div>
+                  <div className="ring ring-2"></div>
+                  <div className="ring ring-3"></div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <Image src="/robot.png" alt="robo-dude" width={400} height={400} className="max-sm:hidden" />
       </section>
-      <section className="flex flex-col gap-6 mt-8">
-        <h2>Your Interviews</h2>
-        <div className="interviews-section">
+
+      <section className="data-section">
+        <div className="section-header">
+          <h2 className="section-title">
+            <span className="title-icon">🤖</span>
+            Your Training Archives
+          </h2>
+          <div className="section-line"></div>
+        </div>
+        
+        <div className="interviews-grid">
           {hasPastInterviews ? (
             userInterviews?.map((interview) => (
               <InterviewCard {...interview} key={interview.id} currentUserId={user.id} />
             ))
           ) : (
-            <p>You haven't taken any interviews yet</p>
+            <div className="empty-state">
+              <div className="empty-icon">🎯</div>
+              <p className="empty-text">No training sessions detected</p>
+              <p className="empty-subtext">Begin your journey to interview mastery</p>
+            </div>
           )}
         </div>
       </section>
-      <section className="flex flex-col gap-6 mt-8">
-        <h2>Take Interviews</h2>
-        <div className="interviews-section">
+
+      <section className="data-section">
+        <div className="section-header">
+          <h2 className="section-title">
+            <span className="title-icon">⚡</span>
+            Available Training Modules
+          </h2>
+          <div className="section-line"></div>
+        </div>
+        
+        <div className="interviews-grid">
           {hasUpcomingInterviews ? (
             latestInterviews?.map((interview) => (
               <InterviewCard {...interview} key={interview.id} currentUserId={user.id} />
             ))
           ) : (
-            <p>There are no interviews available</p>
+            <div className="empty-state">
+              <div className="empty-icon">🔄</div>
+              <p className="empty-text">No modules currently available</p>
+              <p className="empty-subtext">Check back soon for new training opportunities</p>
+            </div>
           )}
         </div>
       </section>

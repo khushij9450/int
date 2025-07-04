@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Mona_Sans, } from "next/font/google";
+import { Mona_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
@@ -8,10 +8,9 @@ const monaSans = Mona_Sans({
   subsets: ["latin"],
 });
 
- 
 export const metadata: Metadata = {
-  title: "Prepwise",
-  description: " An AI-powered platfrom for preparing for mock interviews.",
+  title: "PrepWise - AI Interview Intelligence",
+  description: "Master your interviews with AI-powered practice sessions and real-time feedback.",
 };
 
 export default function RootLayout({
@@ -22,10 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${monaSans.className} antialiased pattern`}
+        className={`${monaSans.className} antialiased cyber-pattern`}
       >
         {children}
-        <Toaster/>
+        <Toaster />
       </body>
     </html>
   );
