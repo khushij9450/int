@@ -8,6 +8,7 @@ const SplashScreen = () => {
   const router = useRouter();
   const [progress, setProgress] = useState(0);
   const [currentText, setCurrentText] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
   const loadingTexts = [
     "Initializing AI Systems...",
@@ -17,7 +18,14 @@ const SplashScreen = () => {
     "Ready for Launch..."
   ];
 
+  // Ensure component is mounted before rendering dynamic content
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
@@ -37,7 +45,12 @@ const SplashScreen = () => {
       clearInterval(progressInterval);
       clearInterval(textInterval);
     };
-  }, [router]);
+  }, [router, mounted]);
+
+  // Don't render anything until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <div className="splash-screen">
@@ -98,19 +111,23 @@ const SplashScreen = () => {
           </div>
         </div>
 
-        {/* Floating Particles */}
+        {/* Static Particles - Fixed positions to prevent hydration issues */}
         <div className="particles">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div 
-              key={i} 
-              className="particle" 
-              style={{ 
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 3}s`,
-                animationDuration: `${3 + Math.random() * 2}s`
-              }}
-            />
-          ))}
+          <div className="particle" style={{ left: '10%', animationDelay: '0s', animationDuration: '4s' }} />
+          <div className="particle" style={{ left: '20%', animationDelay: '0.5s', animationDuration: '3.5s' }} />
+          <div className="particle" style={{ left: '30%', animationDelay: '1s', animationDuration: '4.5s' }} />
+          <div className="particle" style={{ left: '40%', animationDelay: '1.5s', animationDuration: '3s' }} />
+          <div className="particle" style={{ left: '50%', animationDelay: '2s', animationDuration: '5s' }} />
+          <div className="particle" style={{ left: '60%', animationDelay: '2.5s', animationDuration: '3.5s' }} />
+          <div className="particle" style={{ left: '70%', animationDelay: '3s', animationDuration: '4s' }} />
+          <div className="particle" style={{ left: '80%', animationDelay: '0.3s', animationDuration: '4.5s' }} />
+          <div className="particle" style={{ left: '90%', animationDelay: '1.8s', animationDuration: '3s' }} />
+          <div className="particle" style={{ left: '15%', animationDelay: '2.2s', animationDuration: '5s' }} />
+          <div className="particle" style={{ left: '25%', animationDelay: '0.8s', animationDuration: '3.5s' }} />
+          <div className="particle" style={{ left: '35%', animationDelay: '1.3s', animationDuration: '4s' }} />
+          <div className="particle" style={{ left: '45%', animationDelay: '2.7s', animationDuration: '4.5s' }} />
+          <div className="particle" style={{ left: '55%', animationDelay: '0.2s', animationDuration: '3s' }} />
+          <div className="particle" style={{ left: '75%', animationDelay: '1.7s', animationDuration: '5s' }} />
         </div>
       </div>
     </div>
