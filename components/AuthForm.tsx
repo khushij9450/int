@@ -114,14 +114,14 @@ const AuthForm = ({ type }: { type: FormType }) => {
           <div className="auth-header">
             <div className="auth-logo">
               <div className="logo-glow-auth">
-                <Image src="/logo.svg" alt="logo" height={40} width={48} />
+                <Image src="/mockmate-logo.svg" alt="logo" height={40} width={48} />
               </div>
             </div>
             <h1 className="auth-title">
-              <span className="prep-auth">PREP</span>
-              <span className="wise-auth">WISE</span>
+              <span className="prep-auth">MOCK</span>
+              <span className="wise-auth">MATE</span>
             </h1>
-            <p className="auth-subtitle">AI-Powered Interview Intelligence</p>
+            <p className="auth-subtitle">AI-Powered Mock Interview Intelligence</p>
           </div>
 
           <div className="auth-form-section">

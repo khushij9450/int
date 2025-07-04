@@ -41,7 +41,7 @@ const page = async () => {
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
-              Welcome to the <span className="gradient-text">Future</span> of Interview Preparation
+              Welcome to the <span className="gradient-text">Future</span> of Mock Interview Preparation
             </h1>
             <p className="hero-subtitle">
               Advanced AI algorithms analyze your performance and provide real-time feedback
@@ -59,7 +59,7 @@ const page = async () => {
             </div>
             <Button asChild className="btn-cyber-primary">
               <Link href="/interview">
-                <span>Initialize Interview Protocol</span>
+                <span>Initialize Mock Interview Protocol</span>
                 <div className="btn-glow"></div>
               </Link>
             </Button>
@@ -70,7 +70,7 @@ const page = async () => {
               <div className="robot-container-hero">
                 <Image 
                   src="/robot.png" 
-                  alt="AI Interview Assistant" 
+                  alt="AI Mock Interview Assistant" 
                   width={400} 
                   height={400} 
                   className="robot-image-hero"
@@ -105,7 +105,7 @@ const page = async () => {
             <div className="empty-state">
               <div className="empty-icon">🎯</div>
               <p className="empty-text">No training sessions detected</p>
-              <p className="empty-subtext">Begin your journey to interview mastery</p>
+              <p className="empty-subtext">Begin your journey to mock interview mastery</p>
             </div>
           )}
         </div>

@@ -13,7 +13,7 @@ const SplashScreen = () => {
   const loadingTexts = [
     "Initializing AI Systems...",
     "Loading Neural Networks...",
-    "Calibrating Interview Protocols...",
+    "Calibrating Mock Interview Protocols...",
     "Preparing Virtual Environment...",
     "Ready for Launch..."
   ];
@@ -26,6 +26,7 @@ const SplashScreen = () => {
   useEffect(() => {
     if (!mounted) return;
 
+    // Slower progress to last 4-5 seconds
     const progressInterval = setInterval(() => {
       setProgress(prev => {
         if (prev >= 100) {
@@ -33,13 +34,13 @@ const SplashScreen = () => {
           setTimeout(() => router.push("/"), 500);
           return 100;
         }
-        return prev + 2;
+        return prev + 0.5; // Slower increment for 4-5 second duration
       });
-    }, 50);
+    }, 25);
 
     const textInterval = setInterval(() => {
       setCurrentText(prev => (prev + 1) % loadingTexts.length);
-    }, 1000);
+    }, 800);
 
     return () => {
       clearInterval(progressInterval);
@@ -66,17 +67,17 @@ const SplashScreen = () => {
         <div className="splash-logo-section">
           <div className="logo-container">
             <div className="logo-glow">
-              <Image src="/logo.svg" alt="PrepWise Logo" width={80} height={68} className="logo-icon" />
+              <Image src="/mockmate-logo.svg" alt="MockMate Logo" width={80} height={68} className="logo-icon" />
             </div>
             <div className="hologram-effect"></div>
           </div>
           
           <h1 className="brand-title">
-            <span className="prep">PREP</span>
-            <span className="wise">WISE</span>
+            <span className="prep">MOCK</span>
+            <span className="wise">MATE</span>
           </h1>
           
-          <p className="brand-subtitle">AI-Powered Interview Intelligence</p>
+          <p className="brand-subtitle">AI-Powered Mock Interview Intelligence</p>
         </div>
 
         {/* Robot Animation */}
@@ -107,7 +108,7 @@ const SplashScreen = () => {
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <div className="progress-percentage">{progress}%</div>
+            <div className="progress-percentage">{Math.round(progress)}%</div>
           </div>
         </div>
 

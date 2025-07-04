@@ -188,7 +188,7 @@ const Agent = ({ userName, userId, type, interviewId, questions }: AgentProps) =
                         <div className="user-avatar-frame">
                             <Image 
                                 src="/user-avatar.png" 
-                                alt="Candidate" 
+                                alt={userName} 
                                 width={120} 
                                 height={120} 
                                 className='user-avatar'

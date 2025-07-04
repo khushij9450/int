@@ -9,8 +9,8 @@ const monaSans = Mona_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "PrepWise - AI Interview Intelligence",
-  description: "Master your interviews with AI-powered practice sessions and real-time feedback.",
+  title: "MockMate - AI Mock Interview Intelligence",
+  description: "Master your interviews with AI-powered mock practice sessions and real-time feedback.",
 };
 
 export default function RootLayout({
