@@ -35,9 +35,9 @@ const Layout = async ({ children }: { children: ReactNode }) => {
           
           {user && (
             <div className="profile-section">
-              <div className="user-profile">
+              <Link href="/profile" className="user-profile">
                 <Image 
-                  src="/user-avatar.png" 
+                  src="/bot-avatar.svg" 
                   alt={user.name} 
                   width={32} 
                   height={32} 
@@ -47,7 +47,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
                   <span className="profile-name">{user.name}</span>
                   <span className="profile-role">Candidate</span>
                 </div>
-              </div>
+              </Link>
             </div>
           )}
           
